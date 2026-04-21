@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma';
 export async function GET() {
     try {
         const applications = await prisma.application.findMany({
+            include: { status: true },
             orderBy: { dateApplied: 'desc' },
         });
         return NextResponse.json(applications);
@@ -16,10 +17,9 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { company, role, dateApplied, status, notes, source } = body;
+        const { company, role, dateApplied, statusId, notes, source } = body;
 
-        // Basic Validation
-        if (!company || !role || !dateApplied) {
+        if (!company || !role || !dateApplied || !statusId) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
                 company,
                 role,
                 dateApplied: new Date(dateApplied),
-                status: status || 'Applied',
+                statusId,
                 notes,
                 source,
             },

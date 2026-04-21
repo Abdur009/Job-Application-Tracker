@@ -4,14 +4,14 @@ import prisma from "@/lib/prisma";
 export const dynamic = 'force-dynamic';
 
 export default async function Dashboard() {
-  const applications = await prisma.application.findMany();
+  const applications = await prisma.application.findMany({ include: { status: true } });
 
   const total = applications.length;
-  const applied = applications.filter(a => a.status === 'Applied').length;
-  const interviewing = applications.filter(a => a.status === 'Interview Scheduled').length;
-  const offers = applications.filter(a => a.status === 'Offer Received').length;
-  const rejected = applications.filter(a => a.status === 'Rejected').length;
-  const withdrawn = applications.filter(a => a.status === 'Withdrawn').length;
+  const applied = applications.filter(a => a.status?.label === 'Applied').length;
+  const interviewing = applications.filter(a => a.status?.label === 'Interview Scheduled').length;
+  const offers = applications.filter(a => a.status?.label === 'Offer Received').length;
+  const rejected = applications.filter(a => a.status?.label === 'Rejected').length;
+  const withdrawn = applications.filter(a => a.status?.label === 'Withdrawn').length;
 
   return (
     <div>

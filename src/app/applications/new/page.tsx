@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -8,15 +8,29 @@ export default function NewApplicationPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [statuses, setStatuses] = useState<any[]>([]);
 
     const [formData, setFormData] = useState({
         company: "",
         role: "",
         dateApplied: new Date().toISOString().split("T")[0],
-        status: "Applied",
+        statusId: "",
         source: "",
         notes: "",
     });
+
+    useEffect(() => {
+        fetch('/api/statuses')
+            .then(res => res.json())
+            .then(data => {
+                setStatuses(data);
+                if (data.length > 0) {
+                    setFormData(prev => ({ ...prev, statusId: data[0].id }));
+                }
+            })
+            .catch(console.error);
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,8 +53,8 @@ export default function NewApplicationPage() {
             router.push("/applications");
             router.refresh();
         } catch (err) {
-            const error = err as Error;
-            setError(err.message || "An unexpected error occurred.");
+            const errorObj = err as Error;
+            setError(errorObj.message || "An unexpected error occurred.");
         } finally {
             setLoading(false);
         }
@@ -71,12 +85,10 @@ export default function NewApplicationPage() {
 
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1">Status</label>
-                        <select name="status" value={formData.status} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow bg-white">
-                            <option value="Applied">Applied</option>
-                            <option value="Interview Scheduled">Interview Scheduled</option>
-                            <option value="Offer Received">Offer Received</option>
-                            <option value="Rejected">Rejected</option>
-                            <option value="Withdrawn">Withdrawn</option>
+                        <select name="statusId" value={formData.statusId} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow bg-white">
+                            {statuses.map(s => (
+                                <option key={s.id} value={s.id}>{s.label}</option>
+                            ))}
                         </select>
                     </div>
                 </div>

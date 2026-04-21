@@ -9,14 +9,25 @@ datasource db {
   provider = "postgresql"
 }
 
+model Status {
+  id           String        @id @default(cuid())
+  label        String        @unique
+  applications Application[]
+
+  @@map("statuses")
+}
+
 model Application {
   id          String   @id @default(cuid())
   company     String
   role        String
-  dateApplied DateTime
-  status      String   @default("Applied")
+  dateApplied DateTime @map("date_applied")
+  statusId    String   @map("status_id")
+  status      Status   @relation(fields: [statusId], references: [id])
   notes       String?
   source      String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("applications")
 }

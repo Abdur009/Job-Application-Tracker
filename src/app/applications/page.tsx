@@ -5,8 +5,13 @@ export const dynamic = 'force-dynamic';
 
 export default async function ApplicationsPage() {
     const applications = await prisma.application.findMany({
+        include: { status: true },
         orderBy: { dateApplied: 'desc' },
     });
 
-    return <ApplicationsClient initialData={applications} />;
+    const statuses = await prisma.status.findMany({
+        orderBy: { label: 'asc' },
+    });
+
+    return <ApplicationsClient initialData={applications} statuses={statuses} />;
 }

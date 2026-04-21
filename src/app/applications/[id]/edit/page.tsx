@@ -1,50 +1,57 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useState, useEffect, use } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function EditApplicationPage() {
+export default function EditApplicationPage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter();
-    const params = useParams();
-    const id = params.id as string;
+    const { id } = use(params);
 
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [statuses, setStatuses] = useState<any[]>([]);
 
     const [formData, setFormData] = useState({
         company: "",
         role: "",
         dateApplied: "",
-        status: "",
+        statusId: "",
         source: "",
         notes: "",
     });
 
     useEffect(() => {
-        async function fetchApp() {
+        async function fetchData() {
             try {
-                const res = await fetch(`/api/applications/${id}`);
-                if (!res.ok) throw new Error("Failed to load application data");
-                const data = await res.json();
+                const [appRes, statusRes] = await Promise.all([
+                    fetch(`/api/applications/${id}`),
+                    fetch('/api/statuses')
+                ]);
 
+                if (!appRes.ok) throw new Error("Failed to load application data");
+                const appData = await appRes.json();
+                const statusData = await statusRes.json();
+
+                setStatuses(statusData);
                 setFormData({
-                    company: data.company || "",
-                    role: data.role || "",
-                    dateApplied: new Date(data.dateApplied).toISOString().split("T")[0],
-                    status: data.status || "Applied",
-                    source: data.source || "",
-                    notes: data.notes || "",
+                    company: appData.company || "",
+                    role: appData.role || "",
+                    dateApplied: new Date(appData.dateApplied).toISOString().split("T")[0],
+                    statusId: appData.statusId || (statusData.length > 0 ? statusData[0].id : ""),
+                    source: appData.source || "",
+                    notes: appData.notes || "",
                 });
             } catch (err) {
-                const error = err as Error;
-                setError(err.message);
+                const errorObj = err as Error;
+                setError(errorObj.message);
             } finally {
                 setLoading(false);
             }
         }
-        fetchApp();
+        fetchData();
     }, [id]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -68,8 +75,8 @@ export default function EditApplicationPage() {
             router.push("/applications");
             router.refresh();
         } catch (err) {
-            const error = err as Error;
-            setError(err.message || "An unexpected error occurred.");
+            const errorObj = err as Error;
+            setError(errorObj.message || "An unexpected error occurred.");
             setSaving(false);
         }
     };
@@ -84,8 +91,8 @@ export default function EditApplicationPage() {
             router.push("/applications");
             router.refresh();
         } catch (err) {
-            const error = err as Error;
-            setError(err.message);
+            const errorObj = err as Error;
+            setError(errorObj.message);
             setSaving(false);
         }
     };
@@ -131,12 +138,10 @@ export default function EditApplicationPage() {
 
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1">Status</label>
-                        <select name="status" value={formData.status} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow bg-white">
-                            <option value="Applied">Applied</option>
-                            <option value="Interview Scheduled">Interview Scheduled</option>
-                            <option value="Offer Received">Offer Received</option>
-                            <option value="Rejected">Rejected</option>
-                            <option value="Withdrawn">Withdrawn</option>
+                        <select name="statusId" value={formData.statusId} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow bg-white">
+                            {statuses.map(s => (
+                                <option key={s.id} value={s.id}>{s.label}</option>
+                            ))}
                         </select>
                     </div>
                 </div>

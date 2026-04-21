@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Application } from "@prisma/client";
 
-export default function ApplicationsClient({ initialData }: { initialData: Application[] }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function ApplicationsClient({ initialData, statuses }: { initialData: any[], statuses: any[] }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
 
-    const getStatusColor = (status: string) => {
-        switch (status) {
+    const getStatusColor = (statusLabel: string) => {
+        switch (statusLabel) {
             case 'Applied': return 'bg-blue-100 text-blue-800';
             case 'Interview Scheduled': return 'bg-purple-100 text-purple-800';
             case 'Offer Received': return 'bg-green-100 text-green-800';
@@ -21,7 +21,7 @@ export default function ApplicationsClient({ initialData }: { initialData: Appli
 
     const filteredApplications = initialData.filter(app => {
         const matchesSearch = app.company.toLowerCase().includes(searchTerm.toLowerCase()) || app.role.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesStatus = statusFilter === "All" || app.status === statusFilter;
+        const matchesStatus = statusFilter === "All" || app.status?.label === statusFilter;
         return matchesSearch && matchesStatus;
     });
 
@@ -48,11 +48,9 @@ export default function ApplicationsClient({ initialData }: { initialData: Appli
                     className="px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm bg-white min-w-[200px]"
                 >
                     <option value="All">All Statuses</option>
-                    <option value="Applied">Applied</option>
-                    <option value="Interview Scheduled">Interview Scheduled</option>
-                    <option value="Offer Received">Offer Received</option>
-                    <option value="Rejected">Rejected</option>
-                    <option value="Withdrawn">Withdrawn</option>
+                    {statuses.map(s => (
+                        <option key={s.id} value={s.label}>{s.label}</option>
+                    ))}
                 </select>
             </div>
 
@@ -89,8 +87,8 @@ export default function ApplicationsClient({ initialData }: { initialData: Appli
                                             })}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                                            <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(app.status)}`}>
-                                                {app.status}
+                                            <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(app.status?.label)}`}>
+                                                {app.status?.label}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

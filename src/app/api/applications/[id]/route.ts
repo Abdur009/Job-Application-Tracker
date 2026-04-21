@@ -4,7 +4,10 @@ import prisma from '@/lib/prisma';
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
         const { id } = await params;
-        const application = await prisma.application.findUnique({ where: { id } });
+        const application = await prisma.application.findUnique({
+            where: { id },
+            include: { status: true }
+        });
         if (!application) return NextResponse.json({ error: 'Not found' }, { status: 404 });
         return NextResponse.json(application);
     } catch (error) {
@@ -17,8 +20,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
         const { id } = await params;
         const body = await request.json();
 
-        if (!body.company || !body.role) {
-            return NextResponse.json({ error: 'Company and Role are required' }, { status: 400 });
+        if (!body.company || !body.role || !body.statusId) {
+            return NextResponse.json({ error: 'Company, Role and Status are required' }, { status: 400 });
         }
 
         const application = await prisma.application.update({
@@ -27,7 +30,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
                 company: body.company,
                 role: body.role,
                 dateApplied: new Date(body.dateApplied),
-                status: body.status,
+                statusId: body.statusId,
                 notes: body.notes,
                 source: body.source,
             },
