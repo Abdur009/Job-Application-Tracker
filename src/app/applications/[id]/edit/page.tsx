@@ -37,7 +37,8 @@ export default function EditApplicationPage() {
                     source: data.source || "",
                     notes: data.notes || "",
                 });
-            } catch (err: any) {
+            } catch (err) {
+                const error = err as Error;
                 setError(err.message);
             } finally {
                 setLoading(false);
@@ -66,7 +67,8 @@ export default function EditApplicationPage() {
 
             router.push("/applications");
             router.refresh();
-        } catch (err: any) {
+        } catch (err) {
+            const error = err as Error;
             setError(err.message || "An unexpected error occurred.");
             setSaving(false);
         }
@@ -81,7 +83,8 @@ export default function EditApplicationPage() {
             if (!res.ok) throw new Error("Failed to delete application.");
             router.push("/applications");
             router.refresh();
-        } catch (err: any) {
+        } catch (err) {
+            const error = err as Error;
             setError(err.message);
             setSaving(false);
         }

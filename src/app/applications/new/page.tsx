@@ -38,7 +38,8 @@ export default function NewApplicationPage() {
 
             router.push("/applications");
             router.refresh();
-        } catch (err: any) {
+        } catch (err) {
+            const error = err as Error;
             setError(err.message || "An unexpected error occurred.");
         } finally {
             setLoading(false);
