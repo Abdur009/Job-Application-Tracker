@@ -25,7 +25,7 @@ A full-stack web application that helps users track and manage job applications 
 ### Prerequisites
 
 - Node.js >= 18
-- PostgreSQL local ( Neon)
+- PostgreSQL database (local or Neon)
 
 ### Setup Instructions
 
