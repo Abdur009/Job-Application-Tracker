@@ -26,8 +26,8 @@ model Application {
   status      Status   @relation(fields: [statusId], references: [id])
   notes       String?
   source      String?
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 
   @@map("applications")
 }

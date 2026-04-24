@@ -3,9 +3,11 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { Pool } from 'pg'
 
 const prismaClientSingleton = () => {
-    // If connection string is missing, we still initialize Pool but it may throw when attempting queries.
-    // This satisfies Prisma 7 adapter requirement.
-    const connectionString = process.env.DATABASE_URL;
+    
+    let connectionString = process.env.DATABASE_URL;
+    if (connectionString && connectionString.includes('sslmode=require')) {
+        connectionString = connectionString.replace('sslmode=require', 'sslmode=verify-full');
+    }
     const pool = new Pool({ connectionString });
     const adapter = new PrismaPg(pool);
 

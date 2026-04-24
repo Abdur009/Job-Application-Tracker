@@ -29,6 +29,8 @@ A modern full-stack web application designed to help individuals track their job
 
 1. **Clone the project & install dependencies**
 
+   git clone <your-repository-url>
+   cd job-application-tracker
    ```bash
    npm install
    ```
@@ -37,7 +39,7 @@ A modern full-stack web application designed to help individuals track their job
    
    Create a `.env` file in the root directory:
    ```env
-   DATABASE_URL="postgresql://user:password@localhost:5432/job_tracker?schema=public"
+   DATABASE_URL="your_postgresql_connection-string"
    ```
 
 3. **Initialize the database**
@@ -46,8 +48,8 @@ A modern full-stack web application designed to help individuals track their job
    ```bash
    npx prisma generate
    npx prisma db push
-   # Alternatively use migrations for structured tracking: npx prisma migrate dev --name init
-   ```
+   npx prisma db seed
+  ```
 
 4. **Run the development server**
 
@@ -57,4 +59,4 @@ A modern full-stack web application designed to help individuals track their job
 
 5. **Open browser**
    
-   Visit [http://localhost:3000](http://localhost:3000)
+   Visit [http://localhost:3000]
