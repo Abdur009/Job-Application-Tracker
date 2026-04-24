@@ -31,11 +31,10 @@ A full-stack web application that helps users track and manage job applications 
 
 1. **Clone the project & install dependencies**
 
-   git clone <your-repository-url>
-   cd job-application-tracker
-   ```bash
-   npm install
-   ```
+```bash
+git clone <your-repository-url>
+cd job-application-tracker
+npm install
 
 2. **Database configuration**
    
