@@ -1,6 +1,6 @@
 # Job Application Tracker
 
-A modern full-stack web application designed to help individuals track their job applications organically, without the clutter of robust enterprise applicant tracking systems (ATS).
+A full-stack web application that helps users track and manage job applications in one place. Users can add applications, update statuses, edit records, and monitor progress through a simple dashboard.
 
 ## Features
 
