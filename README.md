@@ -4,11 +4,13 @@ A full-stack web application that helps users track and manage job applications 
 
 ## Features
 
-- **Dashboard:** At-a-glance summary cards for various application statuses (Applied, Interviewing, Offered, Rejected, Withdrawn).
-- **Application List:** A responsive tabular UI displaying all applications, ordered by chronological recency.
-- **Search & Filter:** Find applications by company or role and filter them dynamically based on application status.
-- **Add & Edit:** Intuitive form experiences to log new applications, update status transitions, and add notes.
-- **Modern UI:** Built thoughtfully with responsive, clean Tailwind CSS.
+- **Dashboard:** View a quick summary of total applications by status such as Applied, Interview Scheduled, Offer Received, Rejected, and Withdrawn.
+- **Application List:** See all job applications in a clean and responsive table layout.
+- **Search & Filter:** Search applications by company or role and filter them by status.
+- **Add & Edit:** Add new applications, update existing records, and manage notes easily.
+- **Delete Applications:** Remove applications that are no longer needed.
+- **Responsive UI:** Works smoothly on desktop and mobile devices.
+
 
 ## Tech Stack
 
