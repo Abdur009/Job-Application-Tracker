@@ -36,6 +36,8 @@ git clone <your-repository-url>
 cd job-application-tracker
 npm install
 
+```
+
 2. **Database configuration**
    
    Create a `.env` file in the root directory:
