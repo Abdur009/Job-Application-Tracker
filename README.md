@@ -14,18 +14,18 @@ A full-stack web application that helps users track and manage job applications 
 
 ## Tech Stack
 
-- **Framework:** Next.js (App Router)
+- **Framework:** Next.js 
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **Database ORM:** Prisma
-- **Database:** PostgreSQL (Designed for compatibility, easily adaptable to Neon, Supabase, or a local instance)
+- **Database:** PostgreSQL 
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js >= 18
-- PostgreSQL local or hosted database (e.g., Neon or Supabase)
+- PostgreSQL local ( Neon)
 
 ### Setup Instructions
 
