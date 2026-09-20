@@ -61,31 +61,32 @@ export default function NewApplicationPage() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-slate-200">
-            <h1 className="text-2xl font-bold text-slate-900 mb-6 tracking-tight">Add Application</h1>
+        <div className="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg shadow-slate-200/60 border border-slate-200">
+            <h1 className="text-2xl font-bold text-slate-900 mb-1 tracking-tight">Add Application</h1>
+            <p className="text-sm text-slate-500 mb-6">Track a new job application in your pipeline.</p>
 
-            {error && <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6 border border-red-100 text-sm">{error}</div>}
+            {error && <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6 border border-red-100 text-sm flex items-center gap-2">⚠️ {error}</div>}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Company Name *</label>
-                    <input required type="text" name="company" value={formData.company} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow" placeholder="e.g. Google" />
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Company Name *</label>
+                    <input required type="text" name="company" value={formData.company} onChange={handleChange} className="w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" placeholder="e.g. Google" />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Role / Position *</label>
-                    <input required type="text" name="role" value={formData.role} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow" placeholder="e.g. Frontend Developer" />
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Role / Position *</label>
+                    <input required type="text" name="role" value={formData.role} onChange={handleChange} className="w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" placeholder="e.g. Frontend Developer" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">Date Applied *</label>
-                        <input required type="date" name="dateApplied" value={formData.dateApplied} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow" />
+                        <label className="block text-sm font-medium text-slate-700 mb-1.5">Date Applied *</label>
+                        <input required type="date" name="dateApplied" value={formData.dateApplied} onChange={handleChange} className="w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">Status</label>
-                        <select name="statusId" value={formData.statusId} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow bg-white">
+                        <label className="block text-sm font-medium text-slate-700 mb-1.5">Status</label>
+                        <select name="statusId" value={formData.statusId} onChange={handleChange} className="w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-white">
                             {statuses.map(s => (
                                 <option key={s.id} value={s.id}>{s.label}</option>
                             ))}
@@ -94,20 +95,20 @@ export default function NewApplicationPage() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Source</label>
-                    <input type="text" name="source" value={formData.source} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow" placeholder="e.g. LinkedIn, Indeed, Referral" />
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Source</label>
+                    <input type="text" name="source" value={formData.source} onChange={handleChange} className="w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" placeholder="e.g. LinkedIn, Indeed, Referral" />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Notes</label>
-                    <textarea name="notes" rows={4} value={formData.notes} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow" placeholder="Any details..." />
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Notes</label>
+                    <textarea name="notes" rows={4} value={formData.notes} onChange={handleChange} className="w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all resize-none" placeholder="Any details..." />
                 </div>
 
-                <div className="flex justify-end space-x-4 pt-4 border-t border-slate-100">
-                    <Link href="/applications" className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors focus:ring-2 focus:ring-slate-200 outline-none">
+                <div className="flex justify-end space-x-3 pt-6 border-t border-slate-100">
+                    <Link href="/applications" className="px-5 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors focus:ring-2 focus:ring-slate-200 outline-none">
                         Cancel
                     </Link>
-                    <button type="submit" disabled={loading} className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-lg shadow-sm hover:bg-indigo-700 disabled:opacity-70 transition-all hover:-translate-y-0.5 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 outline-none">
+                    <button type="submit" disabled={loading} className="px-5 py-2.5 text-sm font-semibold text-white bg-indigo-600 border border-transparent rounded-lg shadow-md shadow-indigo-200 hover:bg-indigo-700 disabled:opacity-70 disabled:hover:translate-y-0 transition-all hover:-translate-y-0.5 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 outline-none">
                         {loading ? "Saving..." : "Save Application"}
                     </button>
                 </div>
